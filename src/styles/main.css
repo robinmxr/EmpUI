@@ -1,0 +1,150 @@
+body {
+    font-family: 'Roboto', 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.header {
+    background-color: #1e1e1e;
+    color: #ffffff;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    padding: 15px;
+    height: calc(100vh - 60px);
+    position: fixed;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.sidebar a {
+    color: #a0a0a0;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 5px;
+    transition: all 0.2s ease;
+}
+
+.sidebar a:hover {
+    background-color: #2e2e2e;
+    color: #64b5f6;
+}
+
+.sidebar a.active {
+    background-color: #2e2e2e;
+    color: #64b5f6;
+    border-left: 3px solid #64b5f6;
+}
+
+.main-content {
+    margin-left: 260px;
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.chart-container {
+    margin: 20px 0;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+}
+
+/* Additional styles for dashboard components */
+.metric-card {
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-5px);
+}
+
+.metric-card .title {
+    color: #a0a0a0;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.metric-card .value {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+}
+
+th {
+    background-color: #2e2e2e;
+    color: #e0e0e0;
+    padding: 12px;
+    text-align: left;
+    font-weight: 500;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #2e2e2e;
+}
+
+tr:hover {
+    background-color: #242424;
+}
+
+/* Button styling */
+button {
+    background-color: #2e2e2e;
+    color: #e0e0e0;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #3e3e3e;
+    color: #64b5f6;
+}
+
+button.primary {
+    background-color: #1976d2;
+    color: white;
+}
+
+button.primary:hover {
+    background-color: #1565c0;
+}
+
+/* For MUI components - add these custom variables */
+:root {
+    --background-color: #121212;
+    --surface-color: #1e1e1e;
+    --primary-color: #64b5f6;
+    --secondary-color: #78909c;
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+}
