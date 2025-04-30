@@ -5,18 +5,12 @@ import {
   Pagination, FormControl, InputLabel, Select, MenuItem
 } from '@mui/material';
 import { Leaderboard, CalendarToday } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 import MetricsSummary from '../components/MetricsSummary';
 import dataService from '../services/dataService';
 import avatarImage from '../assets/avatar.png';
 
-const PaginatedEmployeeList = ({ title, employees, itemsPerPage = 5, color, icon: Icon }) => {
-  const [page, setPage] = useState(1);
-
-  // Calculate pagination
-  const startIndex = (page - 1) * itemsPerPage;
-  const paginatedEmployees = employees.slice(startIndex, startIndex + itemsPerPage);
-  const totalPages = Math.ceil(employees.length / itemsPerPage);
-
+const TopEmployeeList = ({ title, employees, color, icon: Icon }) => {
   return (
     <Card sx={{ 
       background: 'transparent',
@@ -35,7 +29,7 @@ const PaginatedEmployeeList = ({ title, employees, itemsPerPage = 5, color, icon
         <Typography variant="h6">{title}</Typography>
       </CardContent>
       <List sx={{ flexGrow: 1, p: 0 }}>
-        {paginatedEmployees.map((employee, index) => (
+        {employees.map((employee, index) => (
           <React.Fragment key={employee.id}>
             <ListItem sx={{ 
               p: 2,
@@ -48,7 +42,10 @@ const PaginatedEmployeeList = ({ title, employees, itemsPerPage = 5, color, icon
                 <Avatar 
                   src={avatarImage}
                   sx={{ 
-                    bgcolor: `${color}`,
+                    bgcolor: index === 0 ? '#FFD700' : // Gold for 1st
+                            index === 1 ? '#C0C0C0' : // Silver for 2nd
+                            index === 2 ? '#CD7F32' : // Bronze for 3rd
+                            `${color}`,
                     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)'
                   }}
                 >
@@ -56,7 +53,39 @@ const PaginatedEmployeeList = ({ title, employees, itemsPerPage = 5, color, icon
                 </Avatar>
               </ListItemAvatar>
               <ListItemText 
-                primary={employee.name} 
+                primary={
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    {index < 3 && (
+                      <Typography 
+                        variant="caption" 
+                        sx={{ 
+                          background: index === 0 ? '#FFD700' : index === 1 ? '#C0C0C0' : '#CD7F32',
+                          color: '#000',
+                          fontWeight: 'bold',
+                          px: 1,
+                          borderRadius: '4px',
+                          mr: 1,
+                          fontSize: '0.7rem'
+                        }}
+                      >
+                        #{index + 1}
+                      </Typography>
+                    )}
+                    <Link 
+                      to={`/employees/${employee.id}`}
+                      style={{ 
+                        color: '#e0e0e0', 
+                        textDecoration: 'none',
+                        '&:hover': {
+                          textDecoration: 'underline',
+                          color: '#64b5f6'
+                        }
+                      }}
+                    >
+                      {employee.name}
+                    </Link>
+                  </Box>
+                }
                 secondary={
                   <Box sx={{ display: 'flex', alignItems: 'center', mt: 0.5 }}>
                     <Box sx={{ 
@@ -80,29 +109,12 @@ const PaginatedEmployeeList = ({ title, employees, itemsPerPage = 5, color, icon
                 }
               />
             </ListItem>
-            {index < paginatedEmployees.length - 1 && (
+            {index < employees.length - 1 && (
               <Divider variant="inset" component="li" sx={{ backgroundColor: 'rgba(255, 255, 255, 0.1)' }} />
             )}
           </React.Fragment>
         ))}
       </List>
-      <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
-        <Pagination 
-          count={totalPages} 
-          page={page} 
-          onChange={(e, value) => setPage(value)}
-          color="primary"
-          size="small"
-          sx={{
-            '& .MuiPaginationItem-root': {
-              color: '#e0e0e0'
-            },
-            '& .Mui-selected': {
-              backgroundColor: 'rgba(100, 181, 246, 0.2) !important'
-            }
-          }}
-        />
-      </Box>
     </Card>
   );
 };
@@ -196,10 +208,9 @@ const DashboardPage = () => {
               transform: 'translateY(-5px)'
             }
           }}>
-            <PaginatedEmployeeList 
+            <TopEmployeeList 
               title="Top Performers" 
               employees={topPerformers} 
-              itemsPerPage={5} 
               color="#64b5f6"
               icon={Leaderboard}
             />
@@ -221,10 +232,9 @@ const DashboardPage = () => {
               transform: 'translateY(-5px)'
             }
           }}>
-            <PaginatedEmployeeList 
+            <TopEmployeeList 
               title="Best Attendance" 
               employees={topAttendance} 
-              itemsPerPage={5} 
               color="#4caf50"
               icon={CalendarToday}
             />
